@@ -34,7 +34,7 @@
   "extra": {
     "laravel": {
       "providers": [
-        "IntegrationHubAggregationProvider"
+        "professionalweb\\IntegrationHub\\IntegrationHubAggregation\\Providers\\IntegrationHubAggregationProvider"
       ]
     }
   }
