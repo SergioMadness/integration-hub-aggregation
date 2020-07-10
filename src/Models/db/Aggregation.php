@@ -25,4 +25,17 @@ class Aggregation extends Model
     protected $casts = [
         'data' => 'json',
     ];
+
+    /**
+     * Get data by name
+     *
+     * @param string $name
+     * @param        $default
+     *
+     * @return mixed
+     */
+    public function getDataItem(string $name, $default)
+    {
+        return $this->data[$name] ?? $default;
+    }
 }

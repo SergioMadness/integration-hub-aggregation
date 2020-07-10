@@ -1,5 +1,6 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHubAggregation\Repositories;
 
+use Illuminate\Support\Carbon;
 use professionalweb\IntegrationHub\IntegrationHubDB\Repositories\BaseRepository;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Models\db\Aggregation;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\Repositories\AggregationRepository as IAggregationRepository;
@@ -48,5 +49,20 @@ class AggregationRepository extends BaseRepository implements IAggregationReposi
         $model = Aggregation::query()->where('namespace', $namespace)->where('item_id', $id)->first();
 
         return $model !== null ? $model->data : [];
+    }
+
+    /**
+     * Get last item date
+     *
+     * @param string $namespace
+     *
+     * @return Carbon
+     */
+    public function getLastItemDate(string $namespace): ?Carbon
+    {
+        /** @var Aggregation $model */
+        $model = Aggregation::query()->where('namespace', $namespace)->select(['updated_at'])->latest()->first();
+
+        return $model !== null ? $model->created_at : null;
     }
 }
