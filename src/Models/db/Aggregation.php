@@ -1,7 +1,8 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHubAggregation\Models\db;
 
 use Illuminate\Support\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
+use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
 
 /**
  * Model to work with aggregations
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string|Carbon $created_at
  * @property string|Carbon $updated_at
  */
-class Aggregation extends Model
+class Aggregation extends UUIDModel implements Model
 {
     protected $table = 'aggregation';
 

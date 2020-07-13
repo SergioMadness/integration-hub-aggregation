@@ -1,6 +1,7 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHubAggregation\Services;
 
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\EventData;
+use professionalweb\IntegrationHub\IntegrationHubAggregation\Models\db\Aggregation;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Services\Subsystem;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Models\AggregationOptions;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\ProcessOptions;
@@ -56,11 +57,14 @@ class AggregationSubsystem implements IAggregationSubsystem
      */
     public function process(EventData $eventData): EventData
     {
-        $model = $this->getAggregationRepository()->create([
-            'item_id' => $eventData->get('id'),
-            'group'   => $this->getProcessOptions()->getOptions()['namespace'],
-            'data'    => $eventData->getData(),
-        ]);
+        /** @var Aggregation $model */
+        $model = $this->getAggregationRepository()->save(
+            $this->getAggregationRepository()->create([
+                'item_id' => $eventData->get('id'),
+                'group'   => $this->getProcessOptions()->getOptions()['namespace'],
+                'data'    => $eventData->getData(),
+            ])
+        );
 
         return $eventData->setData([
             'id' => $model->id,
