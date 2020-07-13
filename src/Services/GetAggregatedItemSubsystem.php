@@ -6,6 +6,8 @@ use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Services\Subs
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\GetItemSubsystem;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\ProcessOptions;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\SubsystemOptions;
+use professionalweb\IntegrationHub\IntegrationHubAggregation\Traits\UseAggregationRepository;
+use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\Repositories\AggregationRepository;
 
 /**
  * Subsystem to get item by id and namespace
@@ -13,10 +15,17 @@ use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Subsys
  */
 class GetAggregatedItemSubsystem implements GetItemSubsystem
 {
+    use UseAggregationRepository;
+
     /**
      * @var ProcessOptions
      */
     private $processOptions;
+
+    public function __construct(AggregationRepository $repository)
+    {
+        $this->setAggregationRepository($repository);
+    }
 
     /**
      * Set options with values
@@ -51,7 +60,12 @@ class GetAggregatedItemSubsystem implements GetItemSubsystem
      */
     public function process(EventData $eventData): EventData
     {
-        // TODO: Implement process() method.
+        return $eventData->setData(
+            $this->getAggregationRepository()->getData(
+                $this->getProcessOptions()->getOptions()['namespace'],
+                $eventData->get('id')
+            )
+        );
     }
 
     /**

@@ -5,14 +5,23 @@ use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Services\Subs
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Models\AggregationOptions;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\ProcessOptions;
 use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\SubsystemOptions;
+use professionalweb\IntegrationHub\IntegrationHubAggregation\Traits\UseAggregationRepository;
+use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\Repositories\AggregationRepository;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\AggregationSubsystem as IAggregationSubsystem;
 
 class AggregationSubsystem implements IAggregationSubsystem
 {
+    use UseAggregationRepository;
+
     /**
      * @var ProcessOptions
      */
     private $processOptions;
+
+    public function __construct(AggregationRepository $repository)
+    {
+        $this->setAggregationRepository($repository);
+    }
 
     /**
      * Set options with values
@@ -47,7 +56,15 @@ class AggregationSubsystem implements IAggregationSubsystem
      */
     public function process(EventData $eventData): EventData
     {
-        // TODO: Implement process() method.
+        $model = $this->getAggregationRepository()->create([
+            'item_id' => $eventData->get('id'),
+            'group'   => $this->getProcessOptions()->getOptions()['namespace'],
+            'data'    => $eventData->getData(),
+        ]);
+
+        return $eventData->setData([
+            'id' => $model->id,
+        ]);
     }
 
     /**
