@@ -26,6 +26,12 @@ class Aggregation extends Model
         'data' => 'json',
     ];
 
+    protected $fillable = [
+        'item_id',
+        'group',
+        'data',
+    ];
+
     /**
      * Get data by name
      *
