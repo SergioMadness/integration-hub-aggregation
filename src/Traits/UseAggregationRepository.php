@@ -26,7 +26,7 @@ trait UseAggregationRepository
      *
      * @return UseAggregationRepository
      */
-    public function setAggregationRepository(AggregationRepository $aggregationRepository): UseAggregationRepository
+    public function setAggregationRepository(AggregationRepository $aggregationRepository): self
     {
         $this->aggregationRepository = $aggregationRepository;
 
