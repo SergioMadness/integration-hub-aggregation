@@ -27,12 +27,18 @@ class AggregationRepository extends BaseRepository implements IAggregationReposi
      */
     public function aggregate(string $namespace, string $id, array $data): Aggregation
     {
-        return Aggregation::query()->updateOrCreate([
-            'namespace' => $namespace,
-            'item_id'   => $id,
+        /** @var Aggregation $model */
+        $model = Aggregation::query()->firstOrNew([
+            'group'   => $namespace,
+            'item_id' => $id,
         ], [
             'data' => $data,
         ]);
+
+        $model->data = array_merge($model->data, $data);
+        $model->save();
+
+        return $model;
     }
 
     /**
@@ -46,7 +52,7 @@ class AggregationRepository extends BaseRepository implements IAggregationReposi
     public function getData(string $namespace, string $id): ?array
     {
         /** @var Aggregation $model */
-        $model = Aggregation::query()->where('namespace', $namespace)->where('item_id', $id)->first();
+        $model = Aggregation::query()->where('group', $namespace)->where('item_id', $id)->first();
 
         return $model !== null ? $model->data : [];
     }
@@ -61,8 +67,8 @@ class AggregationRepository extends BaseRepository implements IAggregationReposi
     public function getLastItemDate(string $namespace): ?Carbon
     {
         /** @var Aggregation $model */
-        $model = Aggregation::query()->where('namespace', $namespace)->select(['updated_at'])->latest()->first();
+        $model = Aggregation::query()->where('group', $namespace)->select(['updated_at'])->orderBy('updated_at', 'desc')->first();
 
-        return $model !== null ? $model->created_at : null;
+        return $model !== null ? $model->updated_at : null;
     }
 }

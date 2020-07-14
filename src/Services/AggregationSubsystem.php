@@ -57,14 +57,15 @@ class AggregationSubsystem implements IAggregationSubsystem
      */
     public function process(EventData $eventData): EventData
     {
+        $itemId = $eventData->get('id');
+        if (empty($itemId)) {
+            return $eventData;
+        }
+        $namespace = $this->getProcessOptions()->getOptions()['namespace'];
+
+        $repository = $this->getAggregationRepository();
         /** @var Aggregation $model */
-        $model = $this->getAggregationRepository()->save(
-            $this->getAggregationRepository()->create([
-                'item_id' => $eventData->get('id'),
-                'group'   => $this->getProcessOptions()->getOptions()['namespace'],
-                'data'    => $eventData->getData(),
-            ])
-        );
+        $model = $repository->aggregate($namespace, $itemId, $eventData->getData());
 
         return $eventData->setData([
             'id' => $model->id,
