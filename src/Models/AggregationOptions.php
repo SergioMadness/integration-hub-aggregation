@@ -39,9 +39,13 @@ class AggregationOptions implements SubsystemOptions
     public function getOptions(): array
     {
         return [
-            'namespace' => [
+            'namespace'  => [
                 'name' => 'Namespace',
                 'type' => 'string',
+            ],
+            'autoCreate' => [
+                'name' => 'autoCreate',
+                'type' => 'bool',
             ],
         ];
     }

@@ -22,18 +22,28 @@ class AggregationRepository extends BaseRepository implements IAggregationReposi
      * @param string $namespace
      * @param string $id
      * @param array  $data
+     * @param bool   $autoCreate
      *
      * @return Aggregation
      */
-    public function aggregate(string $namespace, string $id, array $data): Aggregation
+    public function aggregate(string $namespace, string $id, array $data, bool $autoCreate = false): ?Aggregation
     {
         /** @var Aggregation $model */
-        $model = Aggregation::query()->firstOrNew([
+        $model = Aggregation::query()->where([
             'group'   => $namespace,
             'item_id' => $id,
-        ], [
-            'data' => $data,
-        ]);
+        ])->first();
+
+        if ($model === null && !$autoCreate) {
+            return null;
+        }
+        if ($model === null) {
+            $model = new Aggregation([
+                'group'   => $namespace,
+                'item_id' => $id,
+                'data'    => [],
+            ]);
+        }
 
         $model->data = array_merge($model->data, $data);
         $model->save();

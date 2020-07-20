@@ -15,10 +15,11 @@ interface AggregationRepository extends Repository
      * @param string $namespace
      * @param string $id
      * @param array  $data
+     * @param bool   $autoCreate
      *
      * @return Aggregation
      */
-    public function aggregate(string $namespace, string $id, array $data): Aggregation;
+    public function aggregate(string $namespace, string $id, array $data, bool $autoCreate = false): ?Aggregation;
 
     /**
      * Get data by namespace and id
