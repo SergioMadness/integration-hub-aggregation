@@ -62,10 +62,11 @@ class AggregationSubsystem implements IAggregationSubsystem
             return $eventData;
         }
         $namespace = $this->getProcessOptions()->getOptions()['namespace'];
+        $autoCreation = (bool)($this->getProcessOptions()->getOptions()['autoCreate'] ?? false);
 
         $repository = $this->getAggregationRepository();
         /** @var Aggregation $model */
-        $model = $repository->aggregate($namespace, $itemId, $eventData->getData());
+        $model = $repository->aggregate($namespace, $itemId, $eventData->getData(), $autoCreation);
 
         return $model === null ? $eventData : $eventData->setData([
             'id' => $model->id,
