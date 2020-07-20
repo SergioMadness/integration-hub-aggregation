@@ -67,7 +67,7 @@ class AggregationSubsystem implements IAggregationSubsystem
         /** @var Aggregation $model */
         $model = $repository->aggregate($namespace, $itemId, $eventData->getData());
 
-        return $eventData->setData([
+        return $model === null ? $eventData : $eventData->setData([
             'id' => $model->id,
         ]);
     }
