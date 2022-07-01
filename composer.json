@@ -16,7 +16,8 @@
     "php": ">=7.4",
     "laravel/framework": "5.8.*",
     "professionalweb/integration-hub-common": "dev-develop",
-    "professionalweb/integration-hub-db": "dev-develop"
+    "professionalweb/integration-hub-db": "dev-develop",
+    "professionalweb/lms-common": "dev-develop"
   },
   "require-dev": {
   },

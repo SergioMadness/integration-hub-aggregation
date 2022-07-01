@@ -1,7 +1,7 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHubAggregation\Repositories;
 
 use Illuminate\Support\Carbon;
-use professionalweb\IntegrationHub\IntegrationHubDB\Repositories\BaseRepository;
+use professionalweb\lms\Common\Abstractions\BaseRepository;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Models\db\Aggregation;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\Repositories\AggregationRepository as IAggregationRepository;
 
@@ -11,6 +11,9 @@ use professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\Reposito
  */
 class AggregationRepository extends BaseRepository implements IAggregationRepository
 {
+
+    public bool $noNeedWebsite = true;
+
     public function __construct()
     {
         $this->setModelClass(Aggregation::class);

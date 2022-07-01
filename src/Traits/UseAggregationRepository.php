@@ -11,7 +11,7 @@ trait UseAggregationRepository
     /**
      * @var AggregationRepository
      */
-    private $aggregationRepository;
+    private AggregationRepository $aggregationRepository;
 
     /**
      * @return AggregationRepository

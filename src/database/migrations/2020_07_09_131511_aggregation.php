@@ -13,14 +13,20 @@ class Aggregation extends Migration
      */
     public function up(): void
     {
-        Schema::create('aggregation', function (Blueprint $table) {
+        Schema::create('aggregation', static function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->integer('company_id');
             $table->string('item_id');
             $table->string('group');
             $table->jsonb('data');
             $table->timestamps();
 
-            $table->unique(['group', 'id']);
+            $table->unique(['company_id', 'group', 'item_id']);
+
+            $table->foreign('company_id')
+                ->on('company')
+                ->references('id')
+                ->onDelete('cascade');
         });
     }
 

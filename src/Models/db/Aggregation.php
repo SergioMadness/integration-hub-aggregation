@@ -1,8 +1,8 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHubAggregation\Models\db;
 
 use Illuminate\Support\Carbon;
-use professionalweb\IntegrationHub\IntegrationHubDB\Abstractions\UUIDModel;
-use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Models\Model;
+use professionalweb\lms\Common\Abstractions\UUIDModel;
+use professionalweb\lms\Common\Interfaces\Models\Model;
 
 /**
  * Model to work with aggregations

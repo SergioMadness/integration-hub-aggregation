@@ -17,7 +17,7 @@ class AggregationSubsystem implements IAggregationSubsystem
     /**
      * @var ProcessOptions
      */
-    private $processOptions;
+    private ProcessOptions $processOptions;
 
     public function __construct(AggregationRepository $repository)
     {

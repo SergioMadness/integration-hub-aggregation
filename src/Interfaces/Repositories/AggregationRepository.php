@@ -1,7 +1,7 @@
 <?php namespace professionalweb\IntegrationHub\IntegrationHubAggregation\Interfaces\Repositories;
 
+use professionalweb\lms\Common\Interfaces\Repositories\Repository;
 use professionalweb\IntegrationHub\IntegrationHubAggregation\Models\db\Aggregation;
-use professionalweb\IntegrationHub\IntegrationHubCommon\Interfaces\Repositories\Repository;
 
 /**
  * Interface for repository to work with aggregations

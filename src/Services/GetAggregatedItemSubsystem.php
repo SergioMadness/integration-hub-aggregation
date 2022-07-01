@@ -20,7 +20,7 @@ class GetAggregatedItemSubsystem implements GetItemSubsystem
     /**
      * @var ProcessOptions
      */
-    private $processOptions;
+    private ProcessOptions $processOptions;
 
     public function __construct(AggregationRepository $repository)
     {
